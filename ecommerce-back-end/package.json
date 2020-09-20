@@ -2,7 +2,7 @@
   "name": "ecommerce-back-end",
   "version": "1.0.0",
   "description": "This is the backend of a MERN stack ecommerce store",
-  "main": "index.js",
+  "main": "./src/index.server.js",
   "scripts": {
     "start": "nodemon ./src/index.server.js"
   },
