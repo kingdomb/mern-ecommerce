@@ -1,0 +1,31 @@
+// This is an example of how to use .env security protocol
+
+// ex. .env file contents example
+SPOTIFY_ID=34e84d93de6a4650815e5420e0361fd3
+SPOTIFY_SECRET=5162cd8b5cf940f48702dffe096c2acb
+
+OMDB_SECRET=3733b2b3
+
+BAND_SECRET=e3aa64c9-0e81-41ee-bff1-98270180048b
+
+// ex. key.js file contents example
+exports.spotify = {
+  id: process.env.SPOTIFY_ID,
+  secret: process.env.SPOTIFY_SECRET
+};
+
+exports.bands = {
+  secret: process.env.BAND_SECRET
+};
+
+exports.omdb = {
+  secret: process.env.OMDB_SECRET
+};
+
+// ex. import key.js into file where key is required
+const keys = require("./keys.js");
+
+// ex. optional to assign a variable to the key value
+const movies = keys.omdb.secret;
+const bands = keys.bands.secret;
+
