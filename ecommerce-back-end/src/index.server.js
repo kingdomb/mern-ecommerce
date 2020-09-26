@@ -7,8 +7,8 @@ const mongodbuser = keys.mongodbuser.secret
 const mongodbpass = keys.mongodbpass.secret
 const mongodbdatabase = keys.mongodbdatabase.secret
 const port = keys.port.secret
-console.log(mongodbuser);
-console.log(port);
+console.log(mongodbuser)
+console.log(port)
 
 const app = express()
 

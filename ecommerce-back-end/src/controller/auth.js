@@ -5,11 +5,11 @@ const keys = require('../../key')
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email })
     .exec((error, user) => {
-      if (user) { 
-return res.status(400).json({
-        message: 'User already has an account'
-      }) 
-}
+      if (user) {
+        return res.status(400).json({
+          message: 'User already has an account'
+        })
+      }
 
       const {
         firstName,
@@ -40,6 +40,9 @@ return res.status(400).json({
           })
         }
       })
+      if (error) {
+        console.log(error)
+      }
     })
 }
 
@@ -48,7 +51,7 @@ exports.signin = (req, res) => {
     .exec((error, user) => {
       if (error) return res.status(400).json({ error })
       if (user) {
-        if (user.authenticate(req.bosy.password)) {
+        if (user.authenticate(req.body.password)) {
           const token = jwt.sign({ _id: user._id }, keys.jwt.secret, { expiresIn: '1h' })
           const { firsName, lastName, email, removeListener, fulName } = user
           res.status(200).json({
