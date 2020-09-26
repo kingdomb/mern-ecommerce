@@ -1,21 +1,24 @@
 const express = require('express')
-const env = require('dotenv')
+require('dotenv').config()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const keys = require("../../key");
-
+const keys = require('../key')
+const mongodbuser = keys.mongodbuser.secret
+const mongodbpass = keys.mongodbpass.secret
+const mongodbdatabase = keys.mongodbdatabase.secret
+const port = keys.port.secret
+console.log(mongodbuser);
+console.log(port);
 
 const app = express()
 
 // routes
 const authRoutes = require('./routes/auth')
 
-env.config()
-
 // mongo connection
 // mongodb+srv://admin:<password>@e-commerce-cluster.3651w.mongodb.net/<dbname>?retryWrites=true&w=majority
 mongoose.connect(
-  `mongodb+srv://${keys.mogodbuser.secret}:${keys.mongodbpass.secret}@e-commerce-cluster.3651w.mongodb.net/${keys.mongodbdatabase.secret}?retryWrites=true&w=majority`,
+  `mongodb+srv://${mongodbuser}:${mongodbpass}@e-commerce-cluster.3651w.mongodb.net/${mongodbdatabase}?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -29,7 +32,6 @@ mongoose.connect(
 app.use(bodyParser())
 app.use('/api', authRoutes)
 
-
 // app.get('/', (req, res, next) => {
 //   res.status(200).json({
 //     message: 'Hello world!'
@@ -42,6 +44,6 @@ app.use('/api', authRoutes)
 //   })
 // })
 
-app.listen(keys.port.secret, () => {
-  console.log(`Server is  running on port ${keys.port.secret}`)
+app.listen(port, () => {
+  console.log(`Server is  running on port ${port}`)
 })
