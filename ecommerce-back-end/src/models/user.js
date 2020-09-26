@@ -55,6 +55,12 @@ userSchema.virtual('password')
     this.hash_password = bcrypt.hashSync(password, 10)
   })
 
+// Creating virtual full name key and value
+userSchema.virtual('fullName')
+  .get(function () {
+    return `${this.firstName} ${this.lastName}`
+  })
+
 // checking the password
 userSchema.methods = {
   authenticate: function (password) {

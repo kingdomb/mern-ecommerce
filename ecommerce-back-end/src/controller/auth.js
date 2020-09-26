@@ -48,10 +48,11 @@ exports.signin = (req, res) => {
     if(error) return res.status(400).json({ error })
     if(user) {
       if(user.authenticate(req.bosy.password)) {
-        const token = jwt.sign({_id: user._id}, keys.jwt.secret, { expiresIn})
+        const token = jwt.sign({_id: user._id}, keys.jwt.secret, { expiresIn: '1h'})
+        const { firsName, lastName, email, removeListener, fulName } = user
       }
     }else {
-      return res.status(400).json({message: "Something went wrong!"})
+      return res.status(400).json({message: 'Something went wrong!'})
     }
   })
 }
