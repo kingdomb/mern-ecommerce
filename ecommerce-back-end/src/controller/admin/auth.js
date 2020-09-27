@@ -1,6 +1,6 @@
-const User = require('../models/user')
+const User = require('../../models/user')
 const jwt = require('jsonwebtoken')
-const keys = require('../../key')
+const keys = require('../../../key')
 const jwtSecret = keys.jwt.secret
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email })
@@ -23,7 +23,8 @@ exports.signup = (req, res) => {
         lastName,
         email,
         password,
-        username: Math.random().toString()
+        username: Math.random().toString(),
+        role: 'admin'
       })
 
       _user.save((error, data) => {
@@ -36,7 +37,7 @@ exports.signup = (req, res) => {
         if (data) {
           return res.status(201).json({
             // user: data  (will show in Postman from POST payload)
-            message: 'User created successfully..!'
+            message: 'Admin user created successfully..!'
           })
         }
       })
@@ -51,7 +52,7 @@ exports.signin = (req, res) => {
     .exec((error, user) => {
       if (error) return res.status(400).json({ error })
       if (user) {
-        if (user.authenticate(req.body.password)) {
+        if (user.authenticate(req.body.password) && user.role === 'admin') {
           const token = jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: '1h' })
           const { _id, firsName, lastName, email, role, fullName } = user
           res.status(200).json({

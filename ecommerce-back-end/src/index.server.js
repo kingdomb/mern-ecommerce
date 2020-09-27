@@ -14,6 +14,7 @@ const app = express()
 
 // routes
 const authRoutes = require('./routes/auth')
+const adminRoutes = require('./routes/admin/auth')
 
 // mongo connection
 // mongodb+srv://admin:<password>@e-commerce-cluster.3651w.mongodb.net/<dbname>?retryWrites=true&w=majority
@@ -31,6 +32,7 @@ mongoose.connect(
 // app.use(express.json()) // activate to test server using POST
 app.use(bodyParser())
 app.use('/api', authRoutes)
+app.use('/api', adminRoutes)
 
 // app.get('/', (req, res, next) => {
 //   res.status(200).json({
